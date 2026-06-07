@@ -1,4 +1,4 @@
-# Lab Setup Documentation# Security Onion Detection Engineering Lab
+# Security Onion Detection Engineering Lab
 
 ## Overview
 
@@ -10,7 +10,7 @@ The objective of this lab is to simulate adversary techniques, collect telemetry
 
 ## Lab Architecture
 
-
+```text
                     +----------------------+
                     |   Security Onion     |
                     |      2.4.210         |
