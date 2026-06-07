@@ -1,0 +1,52 @@
+title: Suspicious PowerShell Execution
+id: 6d6c9c57-8f5e-4a1e-bc12-111111111111
+status: experimental
+
+description: Detects PowerShell execution with command-line arguments commonly associated with attacker activity.
+
+references:
+  - https://attack.mitre.org/techniques/T1059/001/
+
+author: Apurv Deoghare
+date: 2026-06-07
+
+logsource:
+  category: process_creation
+  product: windows
+
+detection:
+
+  selection:
+    Image|endswith:
+      - '\powershell.exe'
+      - '\pwsh.exe'
+
+  suspicious_args:
+    CommandLine|contains:
+      - '-enc'
+      - '-encodedcommand'
+      - '-nop'
+      - '-w hidden'
+      - '-windowstyle hidden'
+      - '-executionpolicy bypass'
+      - 'iex '
+      - 'invoke-expression'
+
+  condition: selection and suspicious_args
+
+fields:
+  - Image
+  - CommandLine
+  - ParentImage
+  - User
+
+falsepositives:
+  - Administrative scripts
+  - Automation frameworks
+  - IT management tools
+
+level: high
+
+tags:
+  - attack.execution
+  - attack.t1059.001
