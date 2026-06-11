@@ -1,0 +1,54 @@
+title: Account Discovery Commands
+id: 7b3d9c11-2c8d-4e2a-8d9f-123456789abc
+status: experimental
+
+description: Detects common account discovery commands used to enumerate local or domain users.
+
+references:
+  - https://attack.mitre.org/techniques/T1033/
+
+author: Apurv Deoghare
+date: 2026-06-11
+
+logsource:
+  category: process_creation
+  product: windows
+
+detection:
+
+  selection:
+    Image|endswith:
+      - '\whoami.exe'
+      - '\net.exe'
+      - '\query.exe'
+
+  commandline:
+    CommandLine|contains:
+      - 'user'
+      - '/all'
+      - '/domain'
+
+  parent:
+    ParentImage|endswith:
+      - '\cmd.exe'
+      - '\powershell.exe'
+      - '\wscript.exe'
+
+  condition: selection and commandline and parent
+
+fields:
+  - Image
+  - CommandLine
+  - ParentImage
+  - User
+
+falsepositives:
+  - System administrators
+  - Helpdesk activities
+  - IT inventory scripts
+
+level: medium
+
+tags:
+  - attack.discovery
+  - attack.t1033
