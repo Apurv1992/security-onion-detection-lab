@@ -1,0 +1,27 @@
+title: Failed Logon Attempt
+id: b8c2e123-1111-2222-3333-abcdef123456
+status: experimental
+
+description: Detects Windows failed logon events.
+
+logsource:
+  product: windows
+  service: security
+
+detection:
+  selection:
+    EventID: 4625
+
+  condition: selection
+
+fields:
+  - TargetUserName
+  - IpAddress
+  - WorkstationName
+  - LogonType
+
+level: medium
+
+tags:
+  - attack.credential_access
+  - attack.t1110
