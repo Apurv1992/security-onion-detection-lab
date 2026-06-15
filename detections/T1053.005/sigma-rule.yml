@@ -1,0 +1,46 @@
+title: Scheduled Task Creation via Schtasks
+id: e2d7d0b5-1a6d-4d11-8c4b-abcdef123458
+status: experimental
+
+description: Detects creation of scheduled tasks using schtasks.exe.
+
+references:
+  - https://attack.mitre.org/techniques/T1053/005/
+
+author: Apurv Deoghare
+date: 2026-06-15
+
+logsource:
+  category: process_creation
+  product: windows
+
+detection:
+
+  selection:
+    Image|endswith:
+      - '\schtasks.exe'
+
+  command:
+    CommandLine|contains:
+      - '/create'
+
+  condition: selection and command
+
+fields:
+  - Image
+  - CommandLine
+  - ParentImage
+  - User
+
+falsepositives:
+  - Administrative task creation
+  - Software deployment activities
+  - System maintenance tasks
+
+level: medium
+
+tags:
+  - attack.persistence
+  - attack.execution
+  - attack.scheduled_task
+  - attack.t1053.005
