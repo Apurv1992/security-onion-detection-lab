@@ -1,0 +1,59 @@
+title: Successful User Logon
+id: c8f42f3e-1b3d-4f8a-91f7-abcdef123457
+status: experimental
+
+description: Detects successful Windows logons while excluding common built-in system accounts.
+
+references:
+  - https://attack.mitre.org/techniques/T1078/
+
+author: Apurv Deoghare
+date: 2026-06-15
+
+logsource:
+  product: windows
+  service: security
+
+detection:
+
+  selection:
+    EventID: 4624
+
+  logon_types:
+    LogonType:
+      - 2    # Interactive
+      - 3    # Network
+      - 10   # Remote Interactive (RDP)
+
+  filter_builtin_accounts:
+    TargetUserName:
+      - 'SYSTEM'
+      - 'LOCAL SERVICE'
+      - 'NETWORK SERVICE'
+      - 'ANONYMOUS LOGON'
+
+  filter_windows_accounts:
+    TargetUserName|startswith:
+      - 'UMFD-'
+      - 'DWM-'
+
+  condition: selection and logon_types and not 1 of filter_*
+
+fields:
+  - TargetUserName
+  - TargetDomainName
+  - IpAddress
+  - WorkstationName
+  - LogonType
+
+falsepositives:
+  - Normal user logons
+  - Administrative activity
+  - Service account authentication
+  - Scheduled tasks
+
+level: low
+
+tags:
+  - attack.valid_accounts
+  - attack.t1078
