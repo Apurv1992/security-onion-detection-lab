@@ -52,7 +52,6 @@ security-onion-detection-lab/
 ## Planned Detections
 
 * T1053.005 Scheduled Task Creation
-* T1021 Remote Services
 * T1547 Registry Run Keys / Startup Folder
 * T1003 Credential Dumping
 * T1105 Ingress Tool Transfer
