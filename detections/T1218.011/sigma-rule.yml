@@ -1,0 +1,47 @@
+title: Rundll32 Spawning Child Process
+
+id: b7f2c8a1-6d4e-4c11-a987-abcdef123463
+
+status: experimental
+
+description: Detects child processes spawned by rundll32.exe which may indicate Signed Binary Proxy Execution.
+
+references:
+  - https://attack.mitre.org/techniques/T1218/011/
+
+author: Apurv Deoghare
+
+date: 2026-06-18
+
+logsource:
+  category: process_creation
+  product: windows
+
+detection:
+  selection:
+    ParentImage|endswith:
+      - '\rundll32.exe'
+
+  filter:
+    Image|endswith:
+      - '\rundll32.exe'
+
+  condition: selection and not filter
+
+fields:
+  - Image
+  - CommandLine
+  - ParentImage
+  - User
+
+falsepositives:
+  - Legitimate DLL execution
+  - Software installation processes
+  - Administrative activities
+
+level: high
+
+tags:
+  - attack.defense-evasion
+  - attack.execution
+  - attack.t1218.011
