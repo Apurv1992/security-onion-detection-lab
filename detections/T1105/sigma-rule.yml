@@ -1,0 +1,57 @@
+title: Potential Tool Download via Native Utilities
+id: 5c8e1f8a-8d23-4c89-a456-abcdef123460
+status: experimental
+
+description: Detects potential ingress tool transfer using common Windows utilities and PowerShell.
+
+references:
+  - https://attack.mitre.org/techniques/T1105/
+
+author: Apurv Deoghare
+date: 2026-06-18
+
+logsource:
+  category: process_creation
+  product: windows
+
+detection:
+
+  powershell_download:
+    Image|endswith:
+      - '\powershell.exe'
+    CommandLine|contains:
+      - 'Invoke-WebRequest'
+      - 'iwr '
+
+  certutil_download:
+    Image|endswith:
+      - '\certutil.exe'
+    CommandLine|contains:
+      - 'http'
+
+  bitsadmin_download:
+    Image|endswith:
+      - '\bitsadmin.exe'
+
+  curl_download:
+    Image|endswith:
+      - '\curl.exe'
+
+  condition: powershell_download or certutil_download or bitsadmin_download or curl_download
+
+fields:
+  - Image
+  - CommandLine
+  - ParentImage
+  - User
+
+falsepositives:
+  - Administrative downloads
+  - Software installation
+  - Automated update processes
+
+level: medium
+
+tags:
+  - attack.command-and-control
+  - attack.t1105
