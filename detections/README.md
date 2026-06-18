@@ -1,57 +1,33 @@
-# Detection Catalog
+# Detection Tracker
 
-This directory contains ATT&CK-mapped detections developed and validated within the Security Onion Detection Engineering Lab.
+| ATT&CK ID | Technique                          | Status     |
+| --------- | ---------------------------------- | ---------- |
+| T1033     | Account Discovery                  | ✅ Complete |
+| T1053.005 | Scheduled Task Creation            | ✅ Complete |
+| T1059.001 | PowerShell                         | ✅ Complete |
+| T1078     | Valid Accounts                     | ✅ Complete |
+| T1082     | System Information Discovery       | ✅ Complete |
+| T1105     | Ingress Tool Transfer              | ✅ Complete |
+| T1110     | Brute Force                        | ✅ Complete |
+| T1218.010 | Regsvr32                           | ✅ Complete |
+| T1218.011 | Rundll32                           | ✅ Complete |
+| T1547.001 | Registry Run Keys / Startup Folder | ✅ Complete |
+| T1562.001 | Impair Defenses                    | ✅ Complete |
 
-Each detection includes:
+## Summary
 
-* Attack Simulation
-* Detection Logic
-* Sigma Rule
-* Threat Hunting Queries
-* Validation Results
-* Supporting Evidence
+* Total Detections: 11
+* Discovery: 2
+* Execution: 3
+* Persistence: 3
+* Credential Access: 1
+* Defense Evasion: 3
+* Command and Control: 1
 
-## Detection Coverage
+## Next Phase
 
-| ATT&CK ID | Technique                    | Description                                                                                                |
-| --------- | ---------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| T1082     | System Information Discovery | Detects execution of system information discovery commands such as `systeminfo`, `hostname`, and `whoami`. |
-| T1059.001 | PowerShell                   | Detects PowerShell execution commonly associated with attacker activity.                                   |
-| T1033     | Account Discovery            | Detects commands used to identify the current user context.                                                |
-| T1110     | Brute Force                  | Detects excessive failed authentication attempts against user accounts.                                    |
-| T1078     | Valid Accounts               | Monitors successful authentication activity using valid credentials.                                       |
-| T1053.005 | Scheduled Task Creation      | Detects creation of scheduled tasks using `schtasks.exe`.                                                  |
-
-## ATT&CK Coverage
-
-### Discovery
-
-* T1082 – System Information Discovery
-* T1033 – Account Discovery
-
-### Execution
-
-* T1059.001 – PowerShell
-
-### Credential Access
-
-* T1110 – Brute Force
-
-### Persistence
-
-* T1078 – Valid Accounts
-* T1053.005 – Scheduled Task Creation
-
-## Planned Detections
-
-* T1547 – Registry Run Keys / Startup Folder
-* T1003 – Credential Dumping
-* T1105 – Ingress Tool Transfer
-* T1562 – Impair Defenses
-* T1055 – Process Injection
-* T1218 – Signed Binary Proxy Execution
-
-## Notes
-
-All detections were developed and tested in a controlled lab environment using Security Onion, Windows Active Directory, Sysmon, and Atomic Red Team.
+* T1021.004 - SSH
+* T1046 - Network Service Discovery
+* T1018 - Remote System Discovery
+* T1059.004 - Bash
 
